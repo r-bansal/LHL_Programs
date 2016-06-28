@@ -10,6 +10,9 @@ class Footman < Unit
     # Also also give code outside this class access to these variables (via attr_reader, attr_writer or attr_accessor)
   end
 
+  def attack_barrack
+    (attack_power/2).ceil
+  end
 
 
 end

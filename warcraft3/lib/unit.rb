@@ -1,16 +1,22 @@
 class Unit
-  attr_reader :health_points, :attack_points
-  def initialize(health,attack)
+  attr_reader :health_points, :attack_power, :unit_type
+  def initialize(health,attack,unit = "Foot")
     @health_points = health
-    @attack_points = attack
+    @attack_power = attack_power
+    @unit_type = unit
   end
 
-  def damage(attack_points)
-    @health_points -= attack_points
+  def damage(attack_power)
+    @health_points -= attack_power unless (dead?)
   end
 
   def attack!(enemy)
-    enemy.damage(@attack_points)
+    return if (@unit_type == "Seige" && enemy.unit_type == "Foot")
+    enemy.damage(@attack_power) unless (dead?)
+  end
+
+  def dead?
+    @health_points == 0
   end
 
 end
