@@ -49,7 +49,7 @@ class Barracks
   end
 
   def damaged(attacking_unit)
-      @health_points -= attacking_unit.attack_barrack
+    @health_points -= attacking_unit.attack_barrack
   end
 
 end
