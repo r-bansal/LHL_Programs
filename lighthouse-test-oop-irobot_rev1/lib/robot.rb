@@ -30,13 +30,16 @@ class Robot
 
   def pick_up(new_item)
     # puts "#{@items_weight} beginning #{new_item.weight}"
-    if (@items_weight + new_item.weight) > 250
-      return
+    if self.health <= 80 && new_item.class == BoxOfBolts
+      new_item.feed(self)
     else
-      @equipped_weapon = new_item if (new_item.class.superclass == Weapon)
-      @items_weight += new_item.weight
-      @items << new_item
-
+      if (@items_weight + new_item.weight) > 250
+        return
+      else
+        @equipped_weapon = new_item if (new_item.class.superclass == Weapon)
+        @items_weight += new_item.weight
+        @items << new_item
+      end
     end
   end
 
@@ -59,12 +62,12 @@ class Robot
 
   def attack(another_robot)
     raise "Can only attack a robot" if another_robot.class != Robot
-    if @equipped_weapon.nil?
-      another_robot.wound(5)
-    else
-      @equipped_weapon.hit(another_robot)
+    another_robot.wound(5) if @equipped_weapon.nil?
+    if (@position[1] - another_robot.position[1]).abs <= @equipped_weapon.range
+        @equipped_weapon.hit(another_robot)
+        @equipped_weapon = nil if @equipped_weapon.class == Grenade
     end
-  end
+  end 
 end
 
 # require './item.rb'
@@ -78,4 +81,4 @@ end
 
 
 
-# bundle exec rspec spec/11_new_functions.rb
+# bundle exec rspec spec/14_grenade_reach.rb
