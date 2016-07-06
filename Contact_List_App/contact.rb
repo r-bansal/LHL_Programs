@@ -22,6 +22,7 @@ class Contact
     # Opens 'contacts.csv' and creates a Contact object for each line in the file (aka each contact).
     # @return [Array<Contact>] Array of Contact objects
     def all
+      # // --- RB: What does 'x' refer to? Try to be more specific about variables.
       excel = CSV.read('contacts.csv')
       excel.map { |x| Contact.new(x[0],x[1])}  #,x[1])
       excel
@@ -44,6 +45,7 @@ class Contact
       CSV.open("contacts.csv","ab") do |csv|
         csv << [name,email]
       end
+      # // --- RB: You do not require return in Ruby, last line executed is returned by default. Few examples of this
       return Contact.new(name,email)
 
       # a_string = "#{name},#{email}"
